@@ -21,7 +21,7 @@ public class Ball extends Circle{
 	
 	private void checkBoundsWindow(Integer windowWidth) {
 		
-		//Choca con borde
+		//Case when it hits a border
 		if(!(0 < (int) this.getCenterX() && (int) this.getCenterX() < windowWidth)) {
 			dirX *= -1;
 		}
@@ -38,7 +38,6 @@ public class Ball extends Circle{
 	}
 	
 	public void moveY(Integer winWidth) {
-		
 		setCenterY(getCenterY() + this.speed * dirY);
 	}
 	
