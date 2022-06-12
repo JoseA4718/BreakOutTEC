@@ -7,7 +7,7 @@ public class BrickFactory {
 	public Brick getBrick(BrickType type, Integer x, Integer y, Integer w, Integer h, Integer points, Color color) {
 		
 		switch(type) {
-			case NORMAL:
+			case REGULAR:
 				return new RegularBrick(x, y, w, h, points, color);
 			case LIFE:
 				return new LifeBrick( x,  y,  w,  h,  points,   color);
@@ -17,9 +17,9 @@ public class BrickFactory {
 				return new DoubleRacketBrick( x,  y,  w,  h,  points,   color);
 			case MIDSIZE:
 				return new HalfRacketBrick( x,  y,  w,  h,  points,   color);
-			case INCVEL:
+			case MOREVEL:
 				return new MoreVelocityBrick( x,  y,  w,  h,  points,   color);
-			case DECVEL:
+			case LESSVEL:
 				return new LessVelocityBrick( x,  y,  w,  h,  points,   color);
 		}
 		

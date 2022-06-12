@@ -1,11 +1,11 @@
 package application.Bricks;
 
 public enum BrickType {
-	NORMAL,
+	REGULAR,
 	LIFE,
 	BALL,
 	DOUBLESIZE,
 	MIDSIZE,
-	INCVEL,
-	DECVEL
+	MOREVEL,
+	LESSVEL
 }
