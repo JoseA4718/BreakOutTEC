@@ -21,7 +21,7 @@
 */
 
 #include <stddef.h> // For NULL
-#include "json-maker.h"
+#include "./json-maker.h"
 
 /** Add a character at the end of a string.
   * @param dest Pointer to the null character of the string
@@ -106,8 +106,8 @@ static int nibbletoch( int nibble ) {
 static int escape( int ch ) {
     int i;
     static struct { char code; char ch; } const pair[] = {
-            { '\"', '\"' }, { '\\', '\\' }, { '/',  '/'  }, { 'b',  '\b' },
-            { 'f',  '\f' }, { 'n',  '\n' }, { 'r',  '\r' }, { 't',  '\t' },
+        { '\"', '\"' }, { '\\', '\\' }, { '/',  '/'  }, { 'b',  '\b' },
+        { 'f',  '\f' }, { 'n',  '\n' }, { 'r',  '\r' }, { 't',  '\t' },
     };
     for( i = 0; i < sizeof pair / sizeof *pair; ++i )
         if ( ch == pair[i].ch )

@@ -1,6 +1,3 @@
-//
-// Created by Jose on 6/11/2022.
-//
 /*
 <https://github.com/rafagafe/tiny-json>
   Licensed under the MIT License <http://opensource.org/licenses/MIT>.
@@ -46,11 +43,11 @@ json_t const* json_getProperty( json_t const* obj, char const* property ) {
 
 /* Search a property by its name in a JSON object and return its value. */
 char const* json_getPropertyValue( json_t const* obj, char const* property ) {
-    json_t const* field = json_getProperty( obj, property );
-    if ( !field ) return 0;
-    jsonType_t type = json_getType( field );
-    if ( JSON_ARRAY >= type ) return 0;
-    return json_getValue( field );
+	json_t const* field = json_getProperty( obj, property );
+	if ( !field ) return 0;
+        jsonType_t type = json_getType( field );
+        if ( JSON_ARRAY >= type ) return 0;
+	return json_getValue( field );
 }
 
 /* Internal prototypes: */
@@ -91,10 +88,10 @@ json_t const* json_create( char* str, json_t mem[], unsigned int qty ) {
   * @return  The character code. */
 static char getEscape( char ch ) {
     static struct { char ch; char code; } const pair[] = {
-            { '\"', '\"' }, { '\\', '\\' },
-            { '/',  '/'  }, { 'b',  '\b' },
-            { 'f',  '\f' }, { 'n',  '\n' },
-            { 'r',  '\r' }, { 't',  '\t' },
+        { '\"', '\"' }, { '\\', '\\' },
+        { '/',  '/'  }, { 'b',  '\b' },
+        { 'f',  '\f' }, { 'n',  '\n' },
+        { 'r',  '\r' }, { 't',  '\t' },
     };
     unsigned int i;
     for( i = 0; i < sizeof pair / sizeof *pair; ++i )
@@ -306,11 +303,11 @@ static char* numValue( char* ptr, json_t* property ) {
 static void add( json_t* obj, json_t* property ) {
     property->sibling = 0;
     if ( !obj->u.c.child ){
-        obj->u.c.child = property;
-        obj->u.c.last_child = property;
+	    obj->u.c.child = property;
+	    obj->u.c.last_child = property;
     } else {
-        obj->u.c.last_child->sibling = property;
-        obj->u.c.last_child = property;
+	    obj->u.c.last_child->sibling = property;
+	    obj->u.c.last_child = property;
     }
 }
 
