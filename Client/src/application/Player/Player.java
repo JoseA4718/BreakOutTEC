@@ -17,11 +17,11 @@ public class Player extends Rectangle{
 	}
 	
 	public void moveLeft() {
-		setTranslateX(getTranslateX() - 8);
+		setTranslateX(getTranslateX() - 15);
 	}
 	
 	public void moveRight() {
-		setTranslateX(getTranslateX() + 8);
+		setTranslateX(getTranslateX() + 15);
 	}
 	
 }

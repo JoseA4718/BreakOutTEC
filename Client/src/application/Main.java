@@ -340,10 +340,12 @@ public class Main extends Application {
 		JsonTest json = parser.deserializeJson(cliente.getJsonReceived());
 
 		if (Arrays.deepEquals(json.matrix, this.matrix)){
+			update();
 			  return false;
 		}
 		else {
 			this.matrix = json.matrix;
+			update();
 			return true;
 		}
 	}
@@ -356,6 +358,7 @@ public class Main extends Application {
 			root.getChildren().remove(balls.get(i));
 		}
 		balls.clear();
+		update();
 	}
 	
 	/**
@@ -366,6 +369,7 @@ public class Main extends Application {
 			root.getChildren().remove(bricks.get(i));
 		}
 		bricks.clear();
+		update();
 	}
 	
 	/**
@@ -375,10 +379,11 @@ public class Main extends Application {
 	 */
 	private void spawnBall(Integer quantity) {
 		for(int i = 0; i < quantity; i++) {
-			Ball ball = new Ball(BALLSPAWNX, BALLSPAWNY, 15, ballSpeed, Color.AQUA);
+			Ball ball = new Ball(BALLSPAWNX, BALLSPAWNY, 15, ballSpeed, Color.BLACK);
 			balls.add(ball);
 			root.getChildren().add(ball);
 			ballQuantity++;
+			update();
 		}
 	}
 	
@@ -394,17 +399,17 @@ public class Main extends Application {
 		switch(action) {
 			case "NormalBrick":
 				break;
-			//case "LiveBrick":
-				//this.lives++;
-				//System.out.println(this.lives);
-				//break;
+			case "LiveBrick":
+				this.lives++;
+				System.out.println(this.lives);
+				break;
 			case "Ballbrick":
 				if (balls.size() < 3) {
 					spawnBall(1);
 					System.out.println("Create ball");
 				}
 				break;
-			/*case "DecreaseVelBrick":
+			case "DecreaseVelBrick":
 				balls.forEach(b ->{
 					if(b.getSpeed() > 1) {
 						b.IncreaseSpeed(-1);
@@ -420,7 +425,7 @@ public class Main extends Application {
 					}
 				});
 				ballSpeed++;
-				break;*/
+				break;
 			case "RacketDoubleSizeBrick":
 				racketLenght *= 2;
 				player.setWidth(racketLenght);
@@ -430,7 +435,7 @@ public class Main extends Application {
 				player.setWidth(racketLenght);
 				break;
 		}
-		
+		update();
 	}
 	
 	/**

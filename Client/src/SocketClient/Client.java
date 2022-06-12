@@ -20,8 +20,7 @@ public class Client extends Thread{
 
         String modifiedSentence = new String();
         
-        BufferedReader inFromUser =
-          new BufferedReader(new InputStreamReader(System.in));
+        BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
 
         Socket clientSocket;
 		try {
