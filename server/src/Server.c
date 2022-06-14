@@ -2,11 +2,6 @@
 #include <winsock2.h>
 #include <string.h>
 #include "Constants.h"
-#include "JsonManager.c"
-#include "Constants.h"
-#include "../lib/json-maker.c"
-#include "../lib/tiny-json.c"
-
 int iResult, iSendResult;
 SOCKET sAcceptSocket;
 char recvbuf[DEFAULT_BUFLEN];
