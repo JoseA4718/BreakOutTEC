@@ -544,12 +544,6 @@ public class Main extends Application {
          }
     }
 	
-	/*
-	 * Funci�n inicializadora del juego, crea el men� delm juego
-	 * Entradas: -
-	 * Salidas: -
-	 * Restricciones: -
-	 */
 	/**
 	 * Function that initializes the UI, creates the main menu.
 	 * @param primaryStage Stage object

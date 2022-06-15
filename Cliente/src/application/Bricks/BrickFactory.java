@@ -1,9 +1,23 @@
 package application.Bricks;
 
 import javafx.scene.paint.Color;
-
+/**
+ * Factory pattern class
+ * @author eduar
+ *
+ */
 public class BrickFactory {
-
+	/**
+	 * Function that fabricates a brick object
+	 * @param type type of brick
+	 * @param x x pos in the UI
+	 * @param y y pos in the UI
+	 * @param w width
+	 * @param h height
+	 * @param points points that the brick gives
+	 * @param color color of the brick
+	 * @return a brick object with the given values.
+	 */
 	public Brick getBrick(BrickType type, Integer x, Integer y, Integer w, Integer h, Integer points, Color color) {
 		
 		switch(type) {

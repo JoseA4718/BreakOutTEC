@@ -2,7 +2,11 @@ package application.Bricks;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-
+/**
+ * Brick class
+ * @author eduar
+ *
+ */
 public abstract class Brick extends Rectangle {
 	
 	private Integer points;
