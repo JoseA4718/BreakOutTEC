@@ -31,7 +31,7 @@ import javafx.scene.text.TextAlignment;
 
 public class Main extends Application {
 	
-	//Constantes del juego
+	//Game constants
 	private static final Integer WIDTH = 800;
 	private static final Integer HEIGHT = 600;
 	private static final Integer PLAYERY = 500;
@@ -40,7 +40,7 @@ public class Main extends Application {
 	private static final Integer BALLSPAWNY = 350;
 	private static final Integer DEFAULTPOINTSBRICK = 100;
 	
-	//variables
+	//Game variables
 	private Integer[][] matrix = new Integer[8][14];
 	private Integer lives = 0;
 	private Integer ballQuantity = 0;
@@ -54,10 +54,10 @@ public class Main extends Application {
 	private Integer orangeBrickValue = 0;
 	private Integer redBrickValue = 0;
 	
-	//Matriz de referencia, para saber si cambia
+	//Matrix used to keep track of changes from the server
 	private Integer[][] prevMatrix = new Integer[8][14];
 	
-	//Debug de los json
+	//Flag for debugging json library 
 	Integer jsonDebug = 1;
 	
 	boolean gameOver = false;
@@ -65,35 +65,33 @@ public class Main extends Application {
 	static Cliente cliente = new Cliente("Init");
 	static Spect spect = new Spect();
 
-	//Ventana principal
+	//Main window.
 	Stage window;
 	Scene menuScene;
 	BorderPane root = new BorderPane();
 
 	
-	//Elementos del juego
+	//Game elements, ball and bricks
 	private Player player; 
 	private ArrayList<Ball> balls = new ArrayList<Ball>();
 	private ArrayList<Brick> bricks = new ArrayList<Brick>();
 	
-	//Factor�a de bricks
+	//Brick Factory
 	private BrickFactory factory = new BrickFactory();
 	
-	//WIdgets de estadisticas del juego
+	//Game statistics widgets.
 	
 	Text scoreLabel = new Text("Score: " + Integer.toString(this.score));
 	Text livesLabel = new Text("Lives: " + Integer.toString(this.lives));
 	Text levelLabel = new Text("Level: " + Integer.toString(this.level));
 	
-	//Parser del juego en formato JSON
+	//json parser.
 	JsonParser parser = new JsonParser();
 	
-	/*Funci�n que crea el contenido de la ventana en ese momento
-	 * Entradas: -
-	 * Salidas: Objeto tipo Parent (JavaFX)
-	 * Restricciones: -
+	/**
+	 * Function that creates the window content
+	 * @return
 	 */
-
 	private Parent createContentGame() {
 		
 		root = new BorderPane();
@@ -131,13 +129,10 @@ public class Main extends Application {
 		
 	}
 	
-	/*
-	 * Crea el contenido de la ventana men� del juego
-	 * Entradas: -
-	 * Saldias: -
-	 * REstricciones: -
+	/**
+	 * Function that creates the menu window
+	 * @return
 	 */
-	
 	private Parent createContentMenu() {
 		
 		VBox menu = new VBox(20);
@@ -190,23 +185,20 @@ public class Main extends Application {
 		
 	}
 	
-	/*Funci�n que se encarga de actualizar elementos del juego en tiempo real
-	 * Entrads: -
-	 * Salidas: -
-	 * Restricciones: -
+
+	/**
+	 * Function that updates the game elements and the window gadgets.
 	 */
-	
 	private void update() {
-		
-		//System.out.print(this.score);
-		//Si la matriz cambia, borra la matriz antigua, asigna la nueva matriz y vuelve a construirla
+
+		//If the matrix changes, updates the new change.
 		if(checkMatrixChange()) {
 			System.out.print("Matrix changed");
 			clearBricks();
 			createMatrix();
 		}
 		
-		//Si lives < 0, el juego termina
+		//Checks the remaining lives
 		if(this.lives < 0 && !gameOver) {
 			gameOver = true;
 			clearBricks();
@@ -217,7 +209,7 @@ public class Main extends Application {
 			System.out.println("Perdi�");
 		}
 		
-		//Si rompe todos los bloques, gana el nivel
+		//Checks if all the bricks are broken and the player won a level.
 		if(this.bricks.size() <= 0 && !gameOver) {
 			clearBalls();
 			gameOver = true;
@@ -234,7 +226,7 @@ public class Main extends Application {
 			ball.moveY(WIDTH);
 			
 			
-			//Si alguna bola pasa por debajo de la posici�n Y de la raqueta
+			//Checks the ball position, if its below the pad
 			
 			if(ball.getCenterY() > PLAYERY) {
 				root.getChildren().remove(balls.get(j));
@@ -246,12 +238,12 @@ public class Main extends Application {
 				}
 			}
 			
-			//Si la bola choca con el jugador, osea la raqueta
+			//Ball - pad collision
 			if(player.getBoundsInParent().intersects(ball.getBoundsInParent())) {
 				ball.changeDirY();
 			}
 			
-			//Revisar alguna la bola choca contra alg�n ladrillo
+			//Ball - brick collisions
 			for(int i = 0; i < bricks.size(); i++) {
 				
 				if(ball.getBoundsInParent().intersects(bricks.get(i).getBoundsInParent())) {
@@ -270,7 +262,7 @@ public class Main extends Application {
 			
 		}
 		
-		//Actualizar variables respecto al json
+		//update json variables.
 		setVairablesWithJson();
 		
 		scoreLabel.setText("Score: " + Integer.toString(this.score));
@@ -283,17 +275,13 @@ public class Main extends Application {
 		//clearBricks();
 		
 	}
-	
-	/*
-	 * Funci�n que se encarga de crear una matriz, la parsea dependiendo de los valores de cada ladrillo
-	 * Entradas: -
-	 * Salidas: -
-	 * Restricciones: -
+
+	/**
+	 * Function that creates the matrix of blocks.
 	 */
-	
 	public void createMatrix() {
 	
-		//Crea la matriz de bloques
+		//Create a matrix of bricks, 8x14
 		for(int y = 0; y < 8; y++) {
 			for(int x = 0; x < 14; x++) {
 				
@@ -301,7 +289,7 @@ public class Main extends Application {
 				Integer points = 100;
 				Color color = Color.BLACK;
 				
-				//System.out.print(matrix[y][x]);
+				
 				if(this.matrix[y][x] == 0) {
 					continue;
 				}
@@ -347,7 +335,6 @@ public class Main extends Application {
 					points = this.redBrickValue;
 				}
 				
-				//Integer iInteger = new Integer(iInt);
 				Brick brick = factory.getBrick(type, WIDTH/14 * x, y * 20 + y + 100 , WIDTH/14 - 1, 20, points, color);
 				brick.row = y;
 				brick.col = x;
@@ -356,7 +343,10 @@ public class Main extends Application {
 			}
 		}
 	}
-	
+	/**
+	 * Function to print the matrix
+	 * @param mat a 2D array of ints
+	 */
 	public void printMat(Integer[][] mat) {
 		for(int y = 0; y < 8; y++) {
 			for(int x = 0; x < 14; x++) {
@@ -365,13 +355,11 @@ public class Main extends Application {
 		}
 	}
 	
-	/*
-	 * Funci�n que revisa si la matriz cambia, respecto al json para poder cambiarla en la interfaz
-	 * Entradas: -
-	 * Salidas; -
-	 * Restricciones: -
+
+	/**
+	 * Function that checks if the matrix changes in the json, and makes the necesary updates in the UI
+	 * @return true if the matrix changed
 	 */
-	
 	private Boolean checkMatrixChange() {
 		
 		JsonTestClass json = parser.deserializeJson(cliente.getJsonReceived());
@@ -386,14 +374,9 @@ public class Main extends Application {
 	}
 	
 
-	/*
-	 * Funci�n que se encarga de limpiar la lista de bolas, adem�s de destruir los widgets tipo bola de la interfaz
-	 * Entradas: -
-	 * Salidas: -
-	 * Restricciones: -
+	/**
+	 * Function that cleans the balls list, and builds the ball widgets in the UI
 	 */
-	
-	
 	private void clearBalls() {
 		for(int i = 0; i < balls.size(); i++) {
 			root.getChildren().remove(balls.get(i));
@@ -402,13 +385,11 @@ public class Main extends Application {
 		
 	}
 	
-	/*
-	 * Funci�n que se encarga de limpiar la lista de ladrillos, adem�s de destruir los widgets tipo ladrillo de la interfaz
-	 * Entradas: -
-	 * Salidas: -
-	 * Restricciones: -
+
+	/**
+	 * Function that cleans the bricks list, and destroys the corresponding widgets.
+	 *
 	 */
-	
 	private void clearBricks() {
 		for(int i = 0; i < bricks.size(); i++) {
 			root.getChildren().remove(bricks.get(i));
@@ -416,13 +397,11 @@ public class Main extends Application {
 		bricks.clear();
 	}
 	
-	/*
-	 * Funci�n que se encarga de spawnear las bolas en el juego
-	 * Entradas: quantity: cantidad de bolas a spawnear en el juego
-	 * Salidas: -
-	 * Restricciones: quantity deber�a ser positivo
+
+	/**
+	 * Function that spawns the balls in the game
+	 * @param quantity amount of balls to spawn
 	 */
-	
 	private void spawnBall(Integer quantity) {
 		for(int i = 0; i < quantity; i++) {
 			Ball ball = new Ball(BALLSPAWNX, BALLSPAWNY, 15, ballSpeed, Color.AQUA);
@@ -432,11 +411,10 @@ public class Main extends Application {
 		}
 	}
 	
-	/*
-	 * Funci�n que se encarga decambiar variables del juego cuando un bloque se rompe
-	 * Entradas: action: funci�n del bloque en el juego, points: los puntos que da el bloque
-	 * Salidas: -
-	 * Restricciones: action debe ser alg�n caso, points deber�a ser positivo 
+	/**
+	 * Function that changes the variables of the game when a brick breaks.
+	 * @param action the special power up of the block (extra life....)
+	 * @param points amount of point the brick.
 	 */
 	public void brickAction(String action, Integer points) {
 		System.out.println(action);
@@ -484,12 +462,9 @@ public class Main extends Application {
 		
 	}
 	
-	
-	/*
-	 * funci�n para preparar el juego, antes de mostrarlo al usuario en la interfaz
-	 * Entradas: -
-	 * Salidas: -
-	 * Restricciones: -
+		
+	/**
+	 * Function that prepares the game before creating the UI
 	 */
 	
 	public void setupGame() {
@@ -512,11 +487,12 @@ public class Main extends Application {
 		this.orangeBrickValue = json.orangeBrickValue;
 		this.redBrickValue = json.redBrickValue;
 		
-		//Estilizar labels del juego
+		//Game labels
 		Font font = Font.font("Brush Script MT", FontWeight.BOLD, FontPosture.REGULAR, 35);
 	    scoreLabel.setFont(font);
 	    livesLabel.setFont(font);
 	    levelLabel.setFont(font);
+	    
 	    //Filling color to the label
 	    scoreLabel.setFill(Color.BLACK);
 	    livesLabel.setFill(Color.BLACK);
@@ -527,13 +503,8 @@ public class Main extends Application {
 	}
 	
 	
-	
-	
-	/*
-	 *Funci�n que se encarga de asignar las variables dependiendo del json
-	 *Entradas: -
-	 *Salidas: -
-	 *Restricciones: - 
+	/**
+	 * Function that assigns the variables from the json
 	 */
 	
 	public void setVairablesWithJson() {
@@ -561,9 +532,13 @@ public class Main extends Application {
 		
 	}
 	
-	public static void esperar(int segundos){
+	/**
+	 * Wait function, similar to C sleep(time)
+	 * @param time time to wait
+	 */
+	public static void esperar(int time){
         try {
-            Thread.sleep(segundos * 500);
+            Thread.sleep(time * 500);
          } catch (Exception e) {
             System.out.println(e);
          }
@@ -575,7 +550,11 @@ public class Main extends Application {
 	 * Salidas: -
 	 * Restricciones: -
 	 */
-	
+	/**
+	 * Function that initializes the UI, creates the main menu.
+	 * @param primaryStage Stage object
+	 * @throws IOException exception from the javafx lib
+	 */
 	@Override
 	public void start(Stage primaryStage) throws IOException {
 		cliente.start();
@@ -591,7 +570,6 @@ public class Main extends Application {
 	}
 	
 	
-	//Funci�n main, lo primero que se ejecuta del programa
 	public static void main(String[] args) throws IOException {
 		launch(args);
 	}
