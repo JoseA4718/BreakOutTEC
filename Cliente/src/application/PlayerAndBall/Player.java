@@ -2,7 +2,11 @@ package application.PlayerAndBall;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;;
-
+/**
+ * Class for the player (the pad)
+ * @author eduar
+ *
+ */
 public class Player extends Rectangle{
 
 	final String type;

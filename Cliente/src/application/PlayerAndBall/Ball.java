@@ -2,7 +2,11 @@ package application.PlayerAndBall;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-
+/**
+ * Class for the ball of the game.
+ * @author eduar
+ *
+ */
 public class Ball extends Circle{
 
 	private Integer speed;
@@ -18,10 +22,13 @@ public class Ball extends Circle{
 		setCenterY(posY);
 		
 	}
-	
+	/**
+	 * Method that checks the boundaries of the window.
+	 * @param windowWidth
+	 */
 	private void checkBoundsWindow(Integer windowWidth) {
 		
-		//Choca con borde
+		//Collision
 		if(!(0 < (int) this.getCenterX() && (int) this.getCenterX() < windowWidth)) {
 			dirX *= -1;
 		}
@@ -31,17 +38,25 @@ public class Ball extends Circle{
 		}
 		
 	}
-	
+	/**
+	 * Move the ball in the x axis., checks if its going to collide with the border
+	 * @param winWidth
+	 */
 	public void moveX(Integer winWidth) {
 		checkBoundsWindow(winWidth);
 		setCenterX(getCenterX() + this.speed * dirX);
 	}
-	
+	/**
+	 * Move the ball in the y axis., checks if its going to collide with the border
+	 * @param winWidt
+	 */
 	public void moveY(Integer winWidth) {
 		
 		setCenterY(getCenterY() + this.speed * dirY);
 	}
-	
+	/**
+	 * Change the direction in the y axis.
+	 */
 	public void changeDirY() {
 		this.dirY *= -1;
 	}

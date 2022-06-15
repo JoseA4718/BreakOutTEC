@@ -1,7 +1,11 @@
 package ClientSocket;
 import java.io.*;
 import java.net.*;
-
+/**
+ * Class that implements the socket.
+ * @author eduar
+ *
+ */
 public class Cliente extends Thread{ 
 	String sentence;
 	static String jsonReceived;

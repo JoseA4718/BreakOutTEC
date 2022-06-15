@@ -10,17 +10,20 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
+/**
+ * Class for the game spectator.
+ * @author eduar
+ *
+ */
 public class Spect extends Thread{
-	//Constantes del juego
+	
 	private static final Integer WIDTH = 800;
 	private static final Integer HEIGHT = 600;
 	private static final Integer PLAYERY = 500;
 	
 	Integer score = 0;
 	Text scoreLabel = new Text("Score: " + Integer.toString(this.score));
-	//Text livesLabel = new Text("Lives: " + Integer.toString(this.lives));
-	//Text levelLabel = new Text("Level: " + Integer.toString(this.level));
+
 
 	public void display(String title, String message) {
 		

@@ -1,7 +1,10 @@
 package application.Parser;
 
 import com.google.gson.Gson;
-
+/**
+ * Class that implements the Gson library to parse json files.
+ *
+ */
 public class JsonParser {
 	
 	public static JsonTestClass deserializeJson(String userJson) {
@@ -12,7 +15,7 @@ public class JsonParser {
 		JsonTestClass json = gson.fromJson(userJson, JsonTestClass.class);
 		
 		if (json.matrix == null) {
-			System.out.println("Llegó nula");
+			System.out.println("Llegï¿½ nula");
 		}
 		
 		return json;
